@@ -6,9 +6,9 @@ import kotlin.math.ceil
 import kotlin.math.sqrt
 
 object Day03 {
-    fun solvePart1(input: Int): Int = manhattanDistanceToSpiralCenter(input)
+    fun solvePart1(): Int = manhattanDistanceToSpiralCenter(input())
 
-    fun solvePart2(input: Int): Int = stressTest().first { it > input }
+    fun solvePart2(): Int = stressTest().first { it > input() }
 
     fun manhattanDistanceToSpiralCenter(input: Int): Int {
         if (input == 1) {
@@ -43,6 +43,8 @@ object Day03 {
     }
 
     private fun nextOdd(x: Int): Int = x + (x + 1) % 2
+
+    private fun input() = 368078
 
     data class Point(val x: Int, val y: Int) {
         fun neighbors(): List<Point> = listOf(
