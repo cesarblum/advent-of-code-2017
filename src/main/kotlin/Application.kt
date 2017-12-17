@@ -11,6 +11,7 @@ import org.cesarbs.aoc2017.day08.Day08
 import org.cesarbs.aoc2017.day09.Day09
 import org.cesarbs.aoc2017.day10.Day10
 import org.cesarbs.aoc2017.day11.Day11
+import org.cesarbs.aoc2017.day12.Day12
 
 fun main(args: Array<String>) {
     println("Day 1 part 1: ${Day01.solvePart1()}")
@@ -45,4 +46,7 @@ fun main(args: Array<String>) {
 
     println("Day 11 part 1: ${Day11.solvePart1()}")
     println("Day 11 part 1: ${Day11.solvePart2()}")
+
+    println("Day 12 part 1: ${Day12.solvePart1()}")
+    println("Day 12 part 2: ${Day12.solvePart2()}")
 }
