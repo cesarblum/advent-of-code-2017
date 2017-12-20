@@ -3,9 +3,9 @@ package org.cesarbs.aoc2017.day10
 object Day10 {
     data class HashRoundResult(val numbers: MutableList<Int>, val position: Int, val skipSize: Int)
 
-    fun solvePart1() = hash1(256, input()).let { it[0] * it[1] }
+    fun solvePart1() = singleRoundHash(256, input()).let { it[0] * it[1] }
 
-    fun solvePart2() = hash2(256, input())
+    fun solvePart2() = knotHash(256, input())
 
     private fun <T> MutableList<T>.reverseCircular(fromIndex: Int, length: Int) {
         var i = fromIndex
@@ -21,17 +21,17 @@ object Day10 {
         }
     }
 
-    fun hash1(listLength: Int, lengths: String): List<Int> =
-        lengths.split(",").map { it.toInt() }.let { adaptedLengths ->
-            hashRound(0.until(listLength).toMutableList(), adaptedLengths, 0, 0).numbers
+    fun singleRoundHash(listLength: Int, input: String): List<Int> =
+        input.split(",").map { it.toInt() }.let { parsedInput ->
+            hashRound(0.until(listLength).toMutableList(), parsedInput, 0, 0).numbers
         }
 
-    fun hash2(listLength: Int, lengths: String): String {
-        val adaptedLengths = lengths.map { it.toInt() }.plus(listOf(17, 31, 73, 47, 23))
+    fun knotHash(listLength: Int, input: String): String {
+        val adaptedInput = input.map { it.toInt() }.plus(listOf(17, 31, 73, 47, 23))
         var roundResult = HashRoundResult(0.until(listLength).toMutableList(), 0, 0)
 
         for (round in 0..63) {
-            roundResult = hashRound(roundResult.numbers, adaptedLengths, roundResult.position, roundResult.skipSize)
+            roundResult = hashRound(roundResult.numbers, adaptedInput, roundResult.position, roundResult.skipSize)
         }
 
         return roundResult.numbers
@@ -40,15 +40,15 @@ object Day10 {
     }
 
     private fun hashRound(numbers: MutableList<Int>,
-                          lengths: List<Int>,
+                          input: List<Int>,
                           initialPosition: Int,
                           initialSkipSize: Int): HashRoundResult {
         var position = initialPosition
         var skipSize = initialSkipSize
 
-        lengths.forEach { length ->
-            numbers.reverseCircular(position, length)
-            position = (position + length + skipSize) % numbers.size
+        input.forEach {
+            numbers.reverseCircular(position, it)
+            position = (position + it + skipSize) % numbers.size
             skipSize++
         }
 
